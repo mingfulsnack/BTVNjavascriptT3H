@@ -1,1 +1,111 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather</title>
+    <link rel="stylesheet" href="vendors/bootstrap5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/baitap.css">
+</head>
+<body>
+        <div class="container">
+            <div class="current-info">
+              <div class="date-container">
+                <div class="date" id="date">
+                  <h1>Monday,15 September</h1>
+                </div>
+
+                <div class="others" id="current-weather-items">
+                  <div class="weather-item">
+                    <div>Humidity</div>
+                    <div class="humi">95.2%</div>
+                  </div>
+                  <div class="weather-item">
+                    <div>Visibility</div>
+                    <div class="visi">121</div>
+                  </div>
+                  <div class="weather-item">
+                    <div>Wind</div>
+                    <div class="wind">&nbsp222 km/h</div>
+                  </div>
+
+                </div>
+              </div>
+              
+              <div class="place-container">
+                <div class="country" id="country">VN</div>
+              </div>
+
+              <div class="future-forecast">
+                <div class="today" id="current-temp">
+                  <div class="others">
+                    <div class="day">Monday</div>
+                    <img src="https://openweathermap.org/img/wn/10d@2x.png" alt="weather icon" class="w-icon">
+                    <div><h1 class="tmp">25&#176; C</h1></div>
+                    <br>
+                    <div class="fl">
+                    <div>Feels like&nbsp</div>
+                    <div class="atmp">23&#176; C</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="weather-forecast" id="weather-forecast">
+                  <div class="weather-forecast-item">
+                    <div class="day">Tuesday</div>
+                    <img src="https://openweathermap.org/img/wn/10d@2x.png" alt="weather icon" class="w-icon">
+                    <div class="temp">25&#176; C</div>
+                  </div>
+
+                  <div class="weather-forecast-item">
+                    <div class="day">Wednesday</div>
+                    <img src="https://openweathermap.org/img/wn/10d@2x.png" alt="weather icon" class="w-icon">
+                    <div class="temp">25&#176; C</div>
+                  </div>
+
+                  <div class="weather-forecast-item">
+                    <div class="day">Thursday</div>
+                    <img src="https://openweathermap.org/img/wn/10d@2x.png" alt="weather icon" class="w-icon">
+                    <div class="temp">25&#176; C</div>
+                  </div>
+
+                  <div class="weather-forecast-item">
+                    <div class="day">Friday</div>
+                    <img src="https://openweathermap.org/img/wn/10d@2x.png" alt="weather icon" class="w-icon">
+                    <div class="temp">25&#176; C</div>
+                  </div>
+
+                  <div class="weather-forecast-item">
+                    <div class="day">Saturday</div>
+                    <img src="https://openweathermap.org/img/wn/10d@2x.png" alt="weather icon" class="w-icon">
+                    <div class="temp">25&#176; C</div>
+                  </div>
+
+                  <div class="weather-forecast-item">
+                    <div class="day">Sunday</div>
+                    <img src="https://openweathermap.org/img/wn/10d@2x.png" alt="weather icon" class="w-icon">
+                    <div class="temp">25&#176; C</div>
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+        </div>
+    <script type="text/javascript">
+      var humii = document.getElementById("humi");
+      var xhttp = new XMLHttpRequest();
+        xhttp.onload = function ()
+          {
+            var rs = this.responseText;
+            var p = JSON.parse(rs);
+            humii.innerHTML = p.main.humidity;
+        }
+        xhttp.open("GET","https://api.openweathermap.org/data/2.5/weather?q=Hanoi,vietnam&appid=09a71427c59d38d6a34f89b47d75975c&units=metric");
+        xhttp.send();
+    </script>
+</body>
+</html>
