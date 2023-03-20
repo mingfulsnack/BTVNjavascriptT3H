@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+*{
+    box-sizing:  border-box;
+    margin: 0;
+    padding: 0;
+  }
+  body{
+
+   font-family: 'Poppins',sans-serif;
+
+   height: 100vh;
+  }
+  .container{
+    padding: 20px 70px;
+   
+  }
+.mb-3{
+ opacity: 1;
+ background-image:url(https://img.freepik.com/free-photo/white-cloud-blue-sky_74190-7709.jpg?w=1060&t=st=1679235975~exp=1679236575~hmac=f51aaf5a4b33a568173c9ad131bdf0cbbfc234f1524539b40036a0423b6975e1);
+}
+
