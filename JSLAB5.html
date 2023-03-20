@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="vendors/bootstrap5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+</head>
+<body>
+    <section style="background-image: url('https://img.freepik.com/free-photo/white-cloud-blue-sky_74190-2381.jpg?w=1060&t=st=1679232443~exp=1679233043~hmac=f83d4496cb939e7d4abd3f53274147588bf54ec80fb5477bee6b66d89c7a276a');">
+        <div class="container" >
+            <div class="row" id="rows">
+               
+            </div>
+        </div>
+    </section>
+    <script type="text/javascript">
+     
+        var xhttp = new XMLHttpRequest();//shipe
+        xhttp.onload = function (){
+            var rs = this.responseText;
+            var p = JSON.parse(rs);
+            var ht = p.list;
+            for(var i=0;i<ht.length-24;i++)
+        {
+            var thumb = ht[i].thumbnail;
+            var li = `<div class="col-3">
+                        <div class="mb-3">
+                            <p class="card-date" id="date">${ht[i].dt_txt}</p>
+                            <div class="row" >
+                                <div class="col-6">
+                                <h5 class="card-title" id="ct"><b>${ht[i].main.temp}</b></h5>
+                                <p class="card-text" id="cte">${ht[i].weather[0].description}</p>
+                                </div>
+                                <div class="col-6">
+                                <img id="im" src="https://openweathermap.org/img/wn/10d@2x.png" class="card-img-top" alt="...">
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                </div>`;
+            document.getElementById("rows").innerHTML += li;
+            
+           
+        }
+        }
+        xhttp.open("GET","https://api.openweathermap.org/data/2.5/forecast?q=Hanoi,vietnam&appid=09a71427c59d38d6a34f89b47d75975c&units=metric");
+        xhttp.send();
+    </script>
+</body>
+</html>
