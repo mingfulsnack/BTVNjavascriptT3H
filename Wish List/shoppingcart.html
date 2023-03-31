@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping cart</title>
+    <link rel="stylesheet" href="vendors/bootstrap5.3.0/css/bootstrap.min.css"/>
+</head>
+<body>
+    <section>
+        <div class="container">
+            <div class="row">
+          <div id="nopro" style="display: none;">
+                <div class="alert alert-primary" role="alert">
+                    Nothing here!
+                  </div>
+
+          </div>
+            <div class="row" id="haspro" style="display: block;">
+                <button id="clear" class="btn btn-danger" onclick="clearAll()">Clear</button>
+                <div class="col-9">
+                    <table class="table">
+                        <thead>
+                            <th></th>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Qty</th>
+                            <th>Subtotal</th>
+                            <th>Stock</th>
+                        </thead>
+                        <tbody id="list">
+                            
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col">
+                    <h2>Cart totals</h2>
+                    <h2 id="total"></h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </section>
+    <script type="text/javascript">
+        function cong(x){
+
+        }
+        function tru(x)
+        {
+
+        }
+        var cart = localStorage.getItem("cart");
+        if(cart == null){
+          cart = [];
+        }else{
+          cart = JSON.parse(cart);
+        }
+        var html = ``;
+        var total = 0;
+        for(var i=0;i<cart.length;i++){
+            var img = cart[i].thumbnail;
+            var name = cart[i].title;
+            var price = cart[i].price;
+            var buy_qty = cart[i].buy_qty;
+            var id = cart[i].id;
+            var stock = cart[i].stock;
+            total += price*buy_qty;
+            html += `<tr>
+                                <div id="rong"></div>
+                                <td><img width="150" class="img-thumbnail" src="${img}"/></td>
+                                <td>${name}</td>
+                                <td>${price}$</td>
+                                
+                                <td>${buy_qty}</td>
+                                <td>${price*1}$</td>
+                                <td>${stock}</td>
+                                <td>
+                                    <div class="row">
+                                    <div class="col-4">
+                                    <button  class="btn btn-danger" onclick="cong(${id})">+</button>
+                                    </div>
+                                    <div class="col-4">
+                                    <button  class="btn btn-danger" onclick="tru(${id})">-</button>
+                                    </div>
+                                    <div class="col-4">
+                                    <button  class="btn btn-danger" onclick="removeItem(${id})">X</button>
+                                </td>
+                            </tr>`;
+        }
+        document.getElementById("list").innerHTML = html;
+        document.getElementById("total").innerText = total;
+        function cong(x)
+        {
+            var cart = localStorage.getItem("cart");
+        if(cart == null){
+          cart = [];
+        }else{
+          cart = JSON.parse(cart);
+        }
+        for(var i=0;i<cart.length;i++)
+        {
+            if(x == cart[i].id)
+            {
+                if(cart[i].stock <= cart[i].buy_qty){
+                    alert("Out of stock")
+                    return;
+                }
+                cart[i].buy_qty = cart[i].buy_qty +1;
+            }
+        }
+        localStorage.setItem("cart",JSON.stringify(cart));
+            window.location.reload();
+            
+        }
+        function tru(x)
+        {
+            for(var i=0;i<cart.length;i++)
+            {
+                if(cart[i].id == x) {
+                    if(cart[i].buy_qty>=2)
+                    {
+                    cart[i].buy_qty--;
+                    localStorage.setItem("cart",JSON.stringify(cart));
+                    buy_qty = cart[i].buy_qty;
+                    break;
+                    }
+                    else
+                    {
+                        removeItem(x);
+                        return;
+                    }
+                }
+            }
+            window.location.reload();
+        }
+        function removeItem(x)
+        {
+            var conf = confirm("are u sure to remove ?");
+            if(conf == false) {
+                return;
+            }
+            var c = [];
+            for(var i=0;i<cart.length;i++)
+            {
+                if(cart[i].id != x) c.push(cart[i]);
+            }
+            localStorage.setItem("cart",JSON.stringify(c));
+            window.location.reload();
+        }
+        function clearAll()
+        {
+            var conf = confirm("are u sure to remove all?");
+            if(conf == false) {
+                return;
+            }
+        cart = [];
+        localStorage.setItem("cart",JSON.stringify(cart)); 
+        window.location.reload();
+        }
+        if(cart.length==0){
+            document.getElementById("nopro").style.display = "block";
+            document.getElementById("haspro").style.display = "none";
+        }
+    </script>
+</body>
+</html>

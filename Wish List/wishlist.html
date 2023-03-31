@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wish List</title>
+    <link rel="stylesheet" href="vendors/bootstrap5.3.0/css/bootstrap.min.css"/>
+</head>
+<body>
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-9">
+                    <table class="table">
+                        <thead>
+                            <th></th>
+                            <th>Name</th>
+                            <th>Price</th>
+                        </thead>
+                        <tbody id="list">
+                            
+                        </tbody>
+                    </table>
+                </div>
+        </div>
+    </div>
+
+    </section>
+    <script type="text/javascript">
+        var wishlist = localStorage.getItem("wishlist");
+        if(wishlist == null){
+          wishlist = [];
+        }else{
+          wishlist = JSON.parse(wishlist);
+        }
+        var html = ``;
+        var total = 0;
+        for(var i=0;i<wishlist.length;i++){
+            var img = wishlist[i].thumbnail;
+            var name = wishlist[i].title;
+            var price = wishlist[i].price;
+            var buy_qty = wishlist[i].buy_qty;
+            var id = wishlist[i].id;
+            var stock = wishlist[i].stock;
+            total += price*buy_qty;
+            html += `<tr>
+                                <div id="rong"></div>
+                                <td><img width="150" class="img-thumbnail" src="${img}"/></td>
+                                <td>${name}</td>
+                                <td>${price}$</td>
+                                <td>
+                                    <div class="row">
+                                    <div class="col-6">
+                                    <button  class="btn btn-danger" onclick="addToCart(${id})">Add To Cart</button>
+                                    </div>
+                                    <div class="col-6">
+                                    <button  class="btn btn-danger" onclick="removeItem(${id})">X</button>
+                                </td>
+                            </tr>`;
+        }
+        document.getElementById("list").innerHTML = html;
+        document.getElementById("total").innerText = total;
+        function removeItem(x)
+        {
+            var conf = confirm("are u sure to remove ?");
+            if(conf == false) {
+                return;
+            }
+            var d = [];
+            for(var i=0;i<wishlist.length;i++)
+            {
+                if(wishlist[i].id != x) d.push(wishlist[i]);
+            }
+            localStorage.setItem("wishlist",JSON.stringify(d));
+            window.location.reload();
+        }
+
+        function addToCart(x){
+          var cart = localStorage.getItem("cart");
+          if(cart == null){
+            cart = [];
+          }else{
+            cart = JSON.parse(cart);
+          }
+          var f = false;
+          for(var i=0;i<cart.length;i++){
+            if(x == cart[i].id){
+              f = true;
+              alert("This already has in your cart!");
+              localStorage.setItem("cart",JSON.stringify(cart));
+              break;
+            }
+          }
+          if(f==false){
+            var xhttp = new XMLHttpRequest();
+            xhttp.onload = function(){
+                var rs = this.responseText;
+                var data = JSON.parse(rs);
+                data.buy_qty = 1;
+                cart.push(data);
+                localStorage.setItem("cart",JSON.stringify(cart));
+            }
+            xhttp.open("GET",`https://dummyjson.com/products/${x}`);
+            xhttp.send();
+          }
+        }
+    </script>
+</body>
+</html>
